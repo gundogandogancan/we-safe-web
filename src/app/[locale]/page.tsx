@@ -1,29 +1,21 @@
 /**
- * WeSafe homepage.
+ * WeSafe homepage — root entry point.
+ * Content and section ordering live in HomePageBody to avoid duplication
+ * with the section deep-link pages ([locale]/[section]/page.tsx).
  *
- *   01 Hero       — clean full-bleed Earth video + title + CTAs
+ *   01 Hero       — full-bleed Earth hero
  *   02 Problem
- *   03 Mission    ← anchored by "about" in navbar (Biz Kimiz)
+ *   03 Mission    ← "Biz Kimiz" navbar anchor
  *   04 Network
  *   05 SOS
  *   06 Reporting
  *   07 Volunteer
- *   08 Support    ← anchored by "support" in navbar (Destek)
- *   09 Download   ← anchored by "download" in navbar (İndir)
+ *   08 Support    ← "Destek" navbar anchor
+ *   09 Download   ← "İndir" navbar anchor
  */
 
 import { setRequestLocale } from "next-intl/server";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import GlobalActivationHero from "@/components/sections/GlobalActivationHero";
-import ProblemSection from "@/components/sections/ProblemSection";
-import MissionSection from "@/components/sections/MissionSection";
-import NetworkSection from "@/components/sections/NetworkSection";
-import SOSSection from "@/components/sections/SOSSection";
-import ReportingSection from "@/components/sections/ReportingSection";
-import VolunteerSection from "@/components/sections/VolunteerSection";
-import SupportSection from "@/components/sections/SupportSection";
-import DownloadSection from "@/components/sections/DownloadSection";
+import HomePageBody from "@/components/HomePageBody";
 
 export default async function Home({
   params,
@@ -32,22 +24,5 @@ export default async function Home({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-
-  return (
-    <>
-      <Navbar />
-      <main>
-        <GlobalActivationHero />
-        <ProblemSection />
-        <MissionSection />
-        <NetworkSection />
-        <SOSSection />
-        <ReportingSection />
-        <VolunteerSection />
-        <SupportSection />
-        <DownloadSection />
-      </main>
-      <Footer />
-    </>
-  );
+  return <HomePageBody />;
 }
