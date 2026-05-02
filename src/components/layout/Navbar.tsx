@@ -1,19 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import LogoMark from "@/components/brand/LogoMark";
 import LangSwitcher from "./LangSwitcher";
 import { cn } from "@/lib/cn";
 
 const NAV = [
-  { href: "#mission",  key: "about"    },  // Biz Kimiz
-  { href: "#download", key: "download" },  // İndir
-  { href: "#support",  key: "support"  },  // Destek
+  { section: "mission",  key: "about"    },  // Biz Kimiz
+  { section: "download", key: "download" },  // İndir
+  { section: "support",  key: "support"  },  // Destek
 ] as const;
+
+function scrollTo(sectionId: string, locale: string) {
+  const el = document.getElementById(sectionId);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  const newPath = sectionId === "hero" ? `/${locale}` : `/${locale}/${sectionId}`;
+  history.pushState(null, "", newPath);
+}
 
 export default function Navbar() {
   const t = useTranslations("nav");
+  const params = useParams();
+  const locale = String(params?.locale ?? "tr");
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -22,6 +32,14 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const handleNav = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+      e.preventDefault();
+      scrollTo(sectionId, locale);
+    },
+    [locale],
+  );
 
   return (
     <header
@@ -34,7 +52,12 @@ export default function Navbar() {
     >
       <div className="mx-auto flex max-w-[1680px] items-center justify-between px-6 py-5 md:px-10 lg:px-16">
         {/* LEFT */}
-        <a href="#hero" className="inline-flex" aria-label={t("aria.home")}>
+        <a
+          href={`/${locale}`}
+          onClick={(e) => handleNav(e, "hero")}
+          className="inline-flex"
+          aria-label={t("aria.home")}
+        >
           <LogoMark />
         </a>
 
@@ -46,7 +69,8 @@ export default function Navbar() {
           {NAV.map((item) => (
             <a
               key={item.key}
-              href={item.href}
+              href={`/${locale}/${item.section}`}
+              onClick={(e) => handleNav(e, item.section)}
               className="font-label text-[11px] font-medium tracking-[0.24em] uppercase text-white/60 transition-colors hover:text-[var(--gold)]"
             >
               {t(item.key)}

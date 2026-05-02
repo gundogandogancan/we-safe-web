@@ -86,7 +86,7 @@ export default function VolunteerSection() {
             </div>
 
             <MagneticButton
-              href="#"
+              onClick={() => {}}
               strength={0.2}
               className="mt-6 inline-flex items-center gap-3 font-label text-[11px] font-semibold tracking-[0.28em] uppercase text-[var(--gold)] transition-all hover:gap-5"
             >

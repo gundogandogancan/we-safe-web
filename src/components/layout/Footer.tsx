@@ -1,40 +1,46 @@
+"use client";
+
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import LogoMark from "@/components/brand/LogoMark";
 import Container from "@/components/ui/Container";
 import LangSwitcher from "./LangSwitcher";
+
+/** Section slugs scroll in-page; all others are external or coming-soon. */
+const SECTION_SLUGS = new Set(["mission", "network", "sos", "support"]);
 
 const COLUMNS = [
   {
     key: "platform",
     items: [
-      { key: "mission", href: "#mission" },
-      { key: "network", href: "#network" },
-      { key: "sos", href: "#sos" },
-      { key: "support", href: "#support" },
+      { key: "mission", href: "mission" },
+      { key: "network", href: "network" },
+      { key: "sos",     href: "sos"     },
+      { key: "support", href: "support" },
     ],
   },
   {
     key: "company",
     items: [
-      { key: "about", href: "#" },
-      { key: "press", href: "#" },
+      { key: "about",   href: null },
+      { key: "press",   href: null },
       { key: "contact", href: "mailto:info@we-safe.io" },
     ],
   },
   {
     key: "legal",
     items: [
-      { key: "privacy", href: "#" },
-      { key: "terms", href: "#" },
-      { key: "consent", href: "#" },
+      { key: "privacy", href: null },
+      { key: "terms",   href: null },
+      { key: "consent", href: null },
     ],
   },
   {
     key: "social",
     items: [
-      { key: "instagram", href: "#" },
-      { key: "x", href: "#" },
-      { key: "tiktok", href: "#" },
+      { key: "instagram", href: null },
+      { key: "x",        href: null },
+      { key: "tiktok",   href: null },
       {
         key: "facebook",
         href: "https://www.facebook.com/people/Wesafe-App/pfbid02vEuXMBKWyBsc4LvnubH6yQwF5kp1X6HQQRMnXwCg8vR3y5mq9uXXxReNBidJuRLZl/",
@@ -45,6 +51,34 @@ const COLUMNS = [
 
 export default function Footer() {
   const t = useTranslations("footer");
+  const params = useParams();
+  const locale = String(params?.locale ?? "tr");
+
+  function resolveHref(href: string | null): string {
+    if (!href) return "/";
+    if (href.startsWith("mailto:") || href.startsWith("http")) return href;
+    // Section slug → path-based URL
+    if (SECTION_SLUGS.has(href)) return `/${locale}/${href}`;
+    return href;
+  }
+
+  function handleClick(
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string | null,
+  ) {
+    if (!href) {
+      // Coming-soon placeholder — block navigation
+      e.preventDefault();
+      return;
+    }
+    if (SECTION_SLUGS.has(href)) {
+      // Smooth-scroll to section, update URL
+      e.preventDefault();
+      document.getElementById(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.pushState(null, "", `/${locale}/${href}`);
+    }
+    // External / mailto links navigate normally
+  }
 
   return (
     <footer
@@ -74,8 +108,9 @@ export default function Footer() {
                   {col.items.map((link) => (
                     <li key={link.key}>
                       <a
-                        href={link.href}
-                        {...(link.href.startsWith("http")
+                        href={resolveHref(link.href)}
+                        onClick={(e) => handleClick(e, link.href)}
+                        {...(typeof link.href === "string" && link.href.startsWith("http")
                           ? { target: "_blank", rel: "noopener noreferrer" }
                           : {})}
                         className="font-body text-[13px] text-white/65 transition-colors hover:text-[var(--gold)]"

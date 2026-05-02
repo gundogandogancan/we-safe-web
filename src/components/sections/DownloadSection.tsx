@@ -125,7 +125,8 @@ function StoreButton({
 
   return (
     <a
-      href="#"
+      href="/"
+      onClick={(e) => e.preventDefault()}
       className="liquid-glass group relative flex min-w-[260px] items-center gap-4 rounded-3xl px-6 py-4 transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02]"
       style={{
         background: cardBg,
