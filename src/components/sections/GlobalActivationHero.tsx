@@ -371,7 +371,10 @@ function PinNode({ pin }: { pin: Pin }) {
 
   // Fluent CSS expressions read --p (the scroll progress) live.
   // (--p − delay) × 12 → 0..1 over a ~0.083 progress window
-  const opacityExpr = `clamp(0, calc((var(--p) - ${pin.delay}) * 12), 1)`;
+  // toFixed(6) locks the string representation so SSR and browser V8 never
+  // diverge on the last floating-point digit (Math.pow rounding difference).
+  const delayStr = pin.delay.toFixed(6);
+  const opacityExpr = `clamp(0, calc((var(--p) - ${delayStr}) * 12), 1)`;
   const scaleExpr = `calc(0.2 + ${opacityExpr} * 0.8)`;
 
   return (

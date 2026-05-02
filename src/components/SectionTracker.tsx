@@ -27,22 +27,20 @@ const SECTIONS = [
 ] as const;
 
 function getActiveSection(): string {
-  const mid = window.innerHeight / 2;
-  let closest = "hero";
-  let closestDist = Infinity;
+  // A section is "active" when its top edge has scrolled above the upper-35%
+  // line of the viewport. We keep the last (furthest-down) qualifying section,
+  // which is the one the user is currently reading.
+  const threshold = window.innerHeight * 0.35;
+  let active = "hero";
 
   for (const id of SECTIONS) {
     const el = document.getElementById(id);
     if (!el) continue;
-    const rect = el.getBoundingClientRect();
-    const elMid = rect.top + rect.height / 2;
-    const dist = Math.abs(elMid - mid);
-    if (dist < closestDist) {
-      closestDist = dist;
-      closest = id;
+    if (el.getBoundingClientRect().top <= threshold) {
+      active = id;
     }
   }
-  return closest;
+  return active;
 }
 
 export default function SectionTracker() {
