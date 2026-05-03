@@ -156,6 +156,7 @@ function PlanCard({
       }
     } catch (err) {
       console.error("Checkout failed:", err);
+      alert("Payment unavailable. Please try again later.");
       setLoading(false);
     }
   }, [planKey, locale]);
