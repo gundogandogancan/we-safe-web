@@ -185,6 +185,7 @@ const es: Messages = {
     coffeeSubtext:
       "En la app, una pequeña taza representa lo mismo — un gesto silencioso de cuidado. Aquí lo decimos claro: tu apoyo mantiene la red encendida.",
     footnote: "Precio por región · Sin anuncios, nunca · 100% a la red",
+    paymentSuccess: "¡Gracias! Pago recibido — te agradecemos tu apoyo.",
     plans: {
       monthly: {
         kind: "Mensual",

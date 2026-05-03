@@ -183,6 +183,7 @@ const en = {
     coffeeSubtext:
       "In the app, a small cup stands for the same thing — a quiet gesture of care. Here we say it plainly: your support keeps the network on.",
     footnote: "Region-aware pricing · No ads, ever · 100% to the network",
+    paymentSuccess: "Thank you! Payment received — we're grateful for your support.",
     plans: {
       monthly: {
         kind: "Monthly",

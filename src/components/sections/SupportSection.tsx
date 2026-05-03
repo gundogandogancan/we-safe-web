@@ -1,8 +1,9 @@
 "use client";
 
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
+import { useParams, useSearchParams } from "next/navigation";
 import Container from "@/components/ui/Container";
 import Eyebrow from "@/components/ui/Eyebrow";
 import GlowOrb from "@/components/ui/GlowOrb";
@@ -29,6 +30,10 @@ export default function SupportSection() {
   const { tier, format } = useCurrency();
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
+  const params = useParams();
+  const locale = String(params?.locale ?? "tr");
+  const searchParams = useSearchParams();
+  const paid = searchParams.get("paid") === "1";
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -58,6 +63,15 @@ export default function SupportSection() {
       </motion.div>
 
       <Container>
+        {paid && (
+          <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mx-auto mb-10 max-w-lg rounded-2xl border border-[var(--gold)]/40 bg-[var(--gold)]/10 px-6 py-4 text-center font-body text-[14px] text-[var(--gold)]"
+          >
+            {t("paymentSuccess")}
+          </motion.div>
+        )}
         <motion.div
           style={{ y: headerY, opacity: headerOpacity }}
           className="mx-auto max-w-3xl text-center"
@@ -94,6 +108,7 @@ export default function SupportSection() {
                 start={p.start}
                 amount={amount}
                 progress={scrollYProgress}
+                locale={locale}
               />
             );
           })}
@@ -111,14 +126,32 @@ function PlanCard({
   start,
   amount,
   progress,
+  locale,
 }: {
   planKey: "monthly" | "onetime" | "crypto";
   featured: boolean;
   start: number;
   amount: string;
   progress: ReturnType<typeof useScroll>["scrollYProgress"];
+  locale: string;
 }) {
   const t = useTranslations("support");
+  const [loading, setLoading] = useState(false);
+
+  const handleCheckout = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planKey, locale }),
+      });
+      const { url } = await res.json();
+      if (url) window.location.href = url;
+    } catch {
+      setLoading(false);
+    }
+  }, [planKey, locale]);
 
   const opacity = useTransform(
     progress,
@@ -185,13 +218,15 @@ function PlanCard({
       ) : (
         <button
           type="button"
-          className={`mt-auto inline-flex items-center justify-center gap-3 rounded-full border px-6 py-3 font-label text-[11px] font-semibold tracking-[0.24em] uppercase transition-all ${
+          onClick={handleCheckout}
+          disabled={loading}
+          className={`mt-auto inline-flex items-center justify-center gap-3 rounded-full border px-6 py-3 font-label text-[11px] font-semibold tracking-[0.24em] uppercase transition-all disabled:opacity-60 disabled:cursor-wait ${
             featured
               ? "border-[var(--gold)] bg-[var(--gold)] text-[var(--deep)] hover:bg-transparent hover:text-[var(--gold)]"
               : "border-white/15 text-white/70 hover:border-[var(--gold)] hover:text-[var(--gold)]"
           }`}
         >
-          {t(`plans.${planKey}.cta`)} <span>→</span>
+          {loading ? "…" : <>{t(`plans.${planKey}.cta`)} <span>→</span></>}
         </button>
       )}
     </TiltCard>

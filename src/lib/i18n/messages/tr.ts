@@ -184,6 +184,7 @@ const tr: Messages = {
     coffeeSubtext:
       "Uygulamadaki küçük fincan, aynı şeyin sessiz bir ifadesi: küçük ve içten bir destek. Burada açıkça söylüyoruz: senin desteğin, ağın hep açık kalmasını sağlar.",
     footnote: "Bölgeye duyarlı fiyat · Reklamsız, her zaman · %100 ağa",
+    paymentSuccess: "Teşekkür ederiz! Ödemen alındı — desteğin için minnettarız.",
     plans: {
       monthly: {
         kind: "Aylık",
