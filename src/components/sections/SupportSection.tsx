@@ -146,9 +146,16 @@ function PlanCard({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ planKey, locale }),
       });
-      const { url } = await res.json();
-      if (url) window.location.href = url;
-    } catch {
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error("Checkout error:", data);
+        alert(data.error ?? "Payment unavailable. Please try again later.");
+        setLoading(false);
+      }
+    } catch (err) {
+      console.error("Checkout failed:", err);
       setLoading(false);
     }
   }, [planKey, locale]);
