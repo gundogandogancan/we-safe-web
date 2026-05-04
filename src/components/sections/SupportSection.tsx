@@ -10,6 +10,8 @@ import GlowOrb from "@/components/ui/GlowOrb";
 import TiltCard from "@/components/motion/TiltCard";
 import RevealText from "@/components/motion/RevealText";
 import { useCurrency } from "@/components/providers/CurrencyProvider";
+import { PRICING, formatPrice } from "@/lib/pricing";
+import type { Locale } from "@/i18n/routing";
 import { sectionIndex } from "@/lib/brand";
 
 type PlanKey = "monthly" | "onetime" | "crypto";
@@ -27,7 +29,7 @@ export const USDT_TRC20_WALLET = "TJHH1UVpnLAwmEaEXNuRGjnaDiuZQJ2fxo";
 
 export default function SupportSection() {
   const t = useTranslations("support");
-  const { tier, format } = useCurrency();
+  useCurrency(); // keeps context alive for sub-components
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const params = useParams();
@@ -95,9 +97,9 @@ export default function SupportSection() {
           {ORDER.map((p) => {
             const amount =
               p.key === "monthly"
-                ? format(tier.monthly)
+                ? formatPrice(PRICING.EUR.monthly, "EUR", locale as Locale)
                 : p.key === "onetime"
-                ? format(tier.oneTime)
+                ? formatPrice(PRICING.EUR.oneTime, "EUR", locale as Locale)
                 : ""; // crypto card hides the big amount line
 
             return (
