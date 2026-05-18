@@ -6,8 +6,10 @@ import LogoMark from "@/components/brand/LogoMark";
 import Container from "@/components/ui/Container";
 import LangSwitcher from "./LangSwitcher";
 
-/** Section slugs scroll in-page; all others are external or coming-soon. */
-const SECTION_SLUGS = new Set(["mission", "network", "sos", "support"]);
+/** Section slugs scroll in-page; all others are external, full pages, or coming-soon. */
+const SECTION_SLUGS = new Set(["mission", "network", "sos"]);
+/** Top-level routes — link straight to /{locale}/{slug}, no scroll behaviour. */
+const PAGE_SLUGS = new Set(["privacy", "terms", "support"]);
 
 const COLUMNS = [
   {
@@ -30,9 +32,9 @@ const COLUMNS = [
   {
     key: "legal",
     items: [
-      { key: "privacy", href: null },
-      { key: "terms",   href: null },
-      { key: "consent", href: null },
+      { key: "privacy", href: "privacy" },
+      { key: "terms",   href: "terms"   },
+      { key: "consent", href: null      },
     ],
   },
   {
@@ -57,8 +59,8 @@ export default function Footer() {
   function resolveHref(href: string | null): string {
     if (!href) return "/";
     if (href.startsWith("mailto:") || href.startsWith("http")) return href;
-    // Section slug → path-based URL
-    if (SECTION_SLUGS.has(href)) return `/${locale}/${href}`;
+    // Section slug or top-level page → path-based URL
+    if (SECTION_SLUGS.has(href) || PAGE_SLUGS.has(href)) return `/${locale}/${href}`;
     return href;
   }
 
@@ -69,6 +71,10 @@ export default function Footer() {
     if (!href) {
       // Coming-soon placeholder — block navigation
       e.preventDefault();
+      return;
+    }
+    if (PAGE_SLUGS.has(href)) {
+      // Full page — let the browser navigate normally
       return;
     }
     if (SECTION_SLUGS.has(href)) {
