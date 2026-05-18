@@ -11,7 +11,7 @@ const es: Messages = {
     mission: "Misión",
     network: "Red",
     sos: "SOS",
-    support: "Apoyo",
+    support: "Contribuir",
     about: "Quiénes somos",
     download: "Descargar",
     ctaLaunching: "Abrir la App",
@@ -177,7 +177,7 @@ const es: Messages = {
   },
 
   support: {
-    eyebrow: "Apoya la Misión",
+    eyebrow: "Impulsa la Misión",
     titleA: "WeSafe es gratis.",
     titleB: "Y siempre lo será.",
     body: "No es una suscripción. No es una donación. Es un acto de pertenencia a la red que sostiene a cada mujer. Si la app se siente como el trabajo de muchas manos, así te sumas a ellas.",
@@ -239,7 +239,7 @@ const es: Messages = {
           mission: "Misión",
           network: "Red",
           sos: "SOS",
-          support: "Apoyo",
+          support: "Contribuir",
         },
       },
       company: {

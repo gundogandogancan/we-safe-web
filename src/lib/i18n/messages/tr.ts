@@ -10,7 +10,7 @@ const tr: Messages = {
     mission: "Misyon",
     network: "Ağ",
     sos: "SOS",
-    support: "Destek",
+    support: "Katkı",
     about: "Biz Kimiz",
     download: "İndir",
     ctaLaunching: "Uygulamayı Aç",
@@ -176,7 +176,7 @@ const tr: Messages = {
   },
 
   support: {
-    eyebrow: "Misyona Destek Ol",
+    eyebrow: "Misyona Güç Ver",
     titleA: "WeSafe ücretsiz.",
     titleB: "Ve daima öyle kalacak.",
     body: "Bir abonelik değil. Bir bağış değil. Her kadını ayakta tutan ağa ait olmanın bir yolu. Uygulama pek çok elin işi gibi hissettiriyorsa, onlardan biri olmanın yolu budur.",
@@ -191,7 +191,7 @@ const tr: Messages = {
         tag: "Misyonu Sürdür",
         cadence: "aylık",
         body: "Her ay küçük bir destek; her kadın için sürekli bir sinyal. Düzenli katkın, ağı bir adım daha güçlü tutar.",
-        cta: "Aylık Destek Ol",
+        cta: "Aylık Katkı Ver",
       },
       onetime: {
         kind: "Tek Seferlik",
@@ -238,7 +238,7 @@ const tr: Messages = {
           mission: "Misyon",
           network: "Ağ",
           sos: "SOS",
-          support: "Destek",
+          support: "Katkı",
         },
       },
       company: {

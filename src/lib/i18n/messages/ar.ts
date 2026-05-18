@@ -11,7 +11,7 @@ const ar: Messages = {
     mission: "الرسالة",
     network: "الشبكة",
     sos: "نداء استغاثة",
-    support: "الدعم",
+    support: "ساهم",
     about: "من نحن",
     download: "تحميل",
     ctaLaunching: "افتح التطبيق",
@@ -177,7 +177,7 @@ const ar: Messages = {
   },
 
   support: {
-    eyebrow: "ادعم الرسالة",
+    eyebrow: "أطلق الرسالة",
     titleA: "WeSafe مجانية.",
     titleB: "وستظل كذلك دائمًا.",
     body: "ليست اشتراكًا. ليست تبرعًا. بل فعل انتماء إلى الشبكة التي تُبقي كل امرأة واقفة. إن شعرتِ بأن التطبيق عمل أيادٍ كثيرة، فهذه طريقة انضمامكِ إليها.",
@@ -239,7 +239,7 @@ const ar: Messages = {
           mission: "الرسالة",
           network: "الشبكة",
           sos: "نداء استغاثة",
-          support: "الدعم",
+          support: "ساهم",
         },
       },
       company: {

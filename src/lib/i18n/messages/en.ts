@@ -8,7 +8,7 @@ const en = {
     mission: "Mission",
     network: "Network",
     sos: "SOS",
-    support: "Support",
+    support: "Contribute",
     about: "About",
     download: "Download",
     ctaLaunching: "Open the App",
@@ -175,7 +175,7 @@ const en = {
   },
 
   support: {
-    eyebrow: "Support The Mission",
+    eyebrow: "Power The Mission",
     titleA: "WeSafe is free.",
     titleB: "And always will be.",
     body: "Not a subscription. Not a donation. An act of belonging to the network that keeps every woman standing. If the app feels like the work of many hands, this is how you join them.",
@@ -237,7 +237,7 @@ const en = {
           mission: "Mission",
           network: "Network",
           sos: "SOS",
-          support: "Support",
+          support: "Contribute",
         },
       },
       company: {
